@@ -1,10 +1,18 @@
+package geschenke;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import java.util.*;
 
+@SpringBootApplication
 public class WeihnachtenVerteiler {
-    public WeihnachtenVerteiler() {
-    }
 
     public static void main(String[] args) {
+        SpringApplication.run(WeihnachtenVerteiler.class, args);
+    }
+
+    private void anyMethod() {
         LinkedList<String> schenkender = new LinkedList();
         LinkedList<String> beschenkter = new LinkedList();
 
