@@ -15,8 +15,8 @@ public class WeihnachtenVerteiler {
     }
 
     public static List<PresentTable> getPresentTableList() {
-        LinkedList<String> schenkender = new LinkedList();
-        LinkedList<String> beschenkter = new LinkedList();
+        LinkedList schenkender = new LinkedList();
+        LinkedList beschenkter = new LinkedList();
 
         for (int i = 0; i < getParticipants().length; ++i) {
             schenkender.add(i, getParticipants()[i]);
@@ -26,8 +26,8 @@ public class WeihnachtenVerteiler {
         HashMap hm = new HashMap();
 
         while (!beschenkter.isEmpty() && !schenkender.isEmpty()) {
-            String key = schenkender.get(getRandomIndex(schenkender));
-            String value = beschenkter.get(getRandomIndex(beschenkter));
+            Object key = schenkender.get(getRandomIndex(schenkender));
+            Object value = beschenkter.get(getRandomIndex(beschenkter));
             if (!key.equals(value) && !isForbidden(getForbiddenList(), key, value)) {
                 hm.put(key, value);
                 schenkender.remove(key);
@@ -35,8 +35,7 @@ public class WeihnachtenVerteiler {
             }
         }
 
-        final List<PresentTable> presentTableList = printMapAndSaveToPresentTable(hm);
-        return presentTableList;
+        return printMapAndSaveToPresentTable(hm);
     }
 
     private static List<PresentTable> printMapAndSaveToPresentTable(Map mp) {
@@ -75,7 +74,7 @@ public class WeihnachtenVerteiler {
         return rev;
     }
 
-    private static boolean isForbidden(HashMap<String, String> verboteneListe, String key, String value) {
+    private static boolean isForbidden(HashMap<String, String> verboteneListe, Object key, Object value) {
         Iterator var4 = verboteneListe.entrySet().iterator();
 
         Map.Entry entry;
