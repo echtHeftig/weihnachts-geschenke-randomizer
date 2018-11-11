@@ -6,8 +6,10 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import geschenke.model.Person;
+import geschenke.WeihnachtenVerteiler;
 import geschenke.model.PresentTable;
+
+import java.util.List;
 
 @SpringUI(path = "")
 public class MyMainView extends UI {
@@ -31,9 +33,12 @@ public class MyMainView extends UI {
     }
 
     private void updatePresentTable() {
-        PresentTable items1 = new PresentTable(new Person("Egon"), new Person("Hans"));
-        PresentTable items2 = new PresentTable(new Person("Miau"), new Person("Hans"));
-        PresentTable items3 = new PresentTable(new Person("Timo"), new Person("Hanna"));
-        grid.setItems(items1, items3, items2);
+        final List<PresentTable> presentTableList = WeihnachtenVerteiler.getPresentTableList();
+
+        for (PresentTable presentTable : presentTableList) {
+            System.out.println("Schenkender wird sein: '" + presentTable.getSchenkender().getName()
+                    + "' und Beschenkter wird sein '" + presentTable.getBeschenkter().getName() + "'.");
+        }
+        grid.setItems(presentTableList);
     }
 }
