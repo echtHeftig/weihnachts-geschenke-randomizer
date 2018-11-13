@@ -1,14 +1,20 @@
 package geschenke;
 
 import geschenke.model.Person;
+import geschenke.model.PersonRepository;
 import geschenke.model.PresentTable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.*;
 
 @SpringBootApplication
-public class WeihnachtenVerteiler {
+public class WeihnachtenVerteiler implements CommandLineRunner {
+
+    @Autowired
+    private PersonRepository personRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(WeihnachtenVerteiler.class, args);
@@ -94,5 +100,11 @@ public class WeihnachtenVerteiler {
         int sizeOfLinkedList = anyLinkedList.size();
         Random generator = new Random();
         return generator.nextInt(sizeOfLinkedList);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        Person personA = new Person("Klara");
+        personRepository.save(personA);
     }
 }
