@@ -8,12 +8,16 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import geschenke.model.PresentTable;
 import geschenke.model.WeihnachtenverteilerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 @SpringUI(path = "presentpairs")
 public class GeneratePresentPairingView extends UI {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(GeneratePresentPairingView.class);
 
     private Grid<PresentTable> grid = new Grid<>(PresentTable.class);
     private Button generateButton = new Button("Generate!");
@@ -40,8 +44,8 @@ public class GeneratePresentPairingView extends UI {
         final List<PresentTable> presentTableList = weihnachtenverteilerService.getPresentTableList();
 
         for (PresentTable presentTable : presentTableList) {
-            System.out.println("Schenkender wird sein: '" + presentTable.getSchenkender().getName()
-                    + "' und Beschenkter wird sein '" + presentTable.getBeschenkter().getName() + "'.");
+            LOGGER.info("Schenkender wird sein: {} und der Beschenkte wird sein: {}",
+                    presentTable.getSchenkender().getName(), presentTable.getBeschenkter().getName());
         }
         grid.setItems(presentTableList);
     }
