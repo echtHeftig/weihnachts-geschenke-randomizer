@@ -8,8 +8,6 @@ import javax.persistence.Id;
 public class Person {
 
     @Id
-    @GeneratedValue
-    private Long id;
     private String name;
 
     public Person() {

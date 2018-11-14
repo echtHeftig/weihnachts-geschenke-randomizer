@@ -11,8 +11,8 @@ import geschenke.model.PresentTable;
 
 import java.util.List;
 
-@SpringUI(path = "")
-public class MyMainView extends UI {
+@SpringUI(path = "presentpairs")
+public class GeneratePresentPairingView extends UI {
 
     private Grid<PresentTable> grid = new Grid<>(PresentTable.class);
     private Button generateButton = new Button("Generate!");
