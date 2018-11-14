@@ -51,7 +51,7 @@ public class WeihnachtenverteilerService {
         return presentTableList;
     }
 
-    //TODO: ForbiddenList has to be input by external interface
+    //TODO: ForbiddenListService has to be input by external interface
     private static HashMap<String, String> getForbiddenList() {
         HashMap simpleForbiddenList = new HashMap();
         simpleForbiddenList.put("Egon", "Paul");
