@@ -1,32 +1,28 @@
-package geschenke;
+package geschenke.model;
 
-import geschenke.model.Person;
-import geschenke.model.PersonRepository;
-import geschenke.model.PresentTable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-@SpringBootApplication
-public class WeihnachtenVerteiler implements CommandLineRunner {
+@Component
+public class WeihnachtenverteilerService {
 
     @Autowired
-    private PersonRepository personRepository;
+    private PersonService personService;
 
-    public static void main(String[] args) {
-        SpringApplication.run(WeihnachtenVerteiler.class, args);
+    public List<Person> getParticipants() {
+        return personService.getAllPersons();
     }
 
-    public static List<PresentTable> getPresentTableList() {
+    public List<PresentTable> getPresentTableList() {
         LinkedList schenkender = new LinkedList();
         LinkedList beschenkter = new LinkedList();
 
-        for (int i = 0; i < getParticipants().length; ++i) {
-            schenkender.add(i, getParticipants()[i]);
-            beschenkter.add(i, getParticipants()[i]);
+        final List<Person> participants = getParticipants();
+        for (int i = 0; i < participants.size(); ++i) {
+            schenkender.add(i, participants.get(i));
+            beschenkter.add(i, participants.get(i));
         }
 
         HashMap hm = new HashMap();
@@ -49,15 +45,10 @@ public class WeihnachtenVerteiler implements CommandLineRunner {
         List<PresentTable> presentTableList = new ArrayList<>();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            presentTableList.add(new PresentTable(new Person(pair.getKey().toString()), new Person(pair.getValue().toString())));
+            presentTableList.add(new PresentTable((Person) pair.getKey(), (Person) pair.getValue()));
             it.remove(); // avoids a ConcurrentModificationException
         }
         return presentTableList;
-    }
-
-    //TODO: Participants has to be input by external interface
-    private static String[] getParticipants() {
-        return new String[]{"Hugo", "Hans", "Egon", "Paul"};
     }
 
     //TODO: ForbiddenList has to be input by external interface
@@ -99,11 +90,5 @@ public class WeihnachtenVerteiler implements CommandLineRunner {
         int sizeOfLinkedList = anyLinkedList.size();
         Random generator = new Random();
         return generator.nextInt(sizeOfLinkedList);
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
-        Person personA = new Person("Klara");
-        personRepository.save(personA);
     }
 }

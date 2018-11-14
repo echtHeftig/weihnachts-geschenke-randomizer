@@ -6,8 +6,9 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import geschenke.WeihnachtenVerteiler;
 import geschenke.model.PresentTable;
+import geschenke.model.WeihnachtenverteilerService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -16,6 +17,9 @@ public class GeneratePresentPairingView extends UI {
 
     private Grid<PresentTable> grid = new Grid<>(PresentTable.class);
     private Button generateButton = new Button("Generate!");
+
+    @Autowired
+    private WeihnachtenverteilerService weihnachtenverteilerService;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -33,7 +37,7 @@ public class GeneratePresentPairingView extends UI {
     }
 
     private void updatePresentTable() {
-        final List<PresentTable> presentTableList = WeihnachtenVerteiler.getPresentTableList();
+        final List<PresentTable> presentTableList = weihnachtenverteilerService.getPresentTableList();
 
         for (PresentTable presentTable : presentTableList) {
             System.out.println("Schenkender wird sein: '" + presentTable.getSchenkender().getName()
