@@ -2,11 +2,9 @@ package geschenke.view;
 
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import geschenke.model.PresentTable;
+import geschenke.model.SchenkenderBeschenkenderException;
 import geschenke.model.WeihnachtenverteilerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +39,13 @@ public class GeneratePresentPairingView extends UI {
     }
 
     private void updatePresentTable() {
-        final List<PresentTable> presentTableList = weihnachtenverteilerService.getPresentTableList();
+        List<PresentTable> presentTableList = null;
+        try {
+            presentTableList = weihnachtenverteilerService.getPresentTableList();
+        } catch (SchenkenderBeschenkenderException e) {
+            Notification.show(e.getNewMessage());
+            return;
+        }
 
         for (PresentTable presentTable : presentTableList) {
             LOGGER.info("Schenkender wird sein: {} und der Beschenkte wird sein: {}",

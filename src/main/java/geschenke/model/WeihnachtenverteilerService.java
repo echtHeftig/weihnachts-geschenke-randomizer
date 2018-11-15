@@ -1,5 +1,7 @@
 package geschenke.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,36 +10,68 @@ import java.util.*;
 @Component
 public class WeihnachtenverteilerService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(WeihnachtenverteilerService.class);
+
     @Autowired
     private PersonService personService;
+    @Autowired
+    private ForbiddenListService forbiddenListService;
 
     public List<Person> getParticipants() {
         return personService.getAllPersons();
     }
 
-    public List<PresentTable> getPresentTableList() {
+    public List<PresentTable> getPresentTableList() throws SchenkenderBeschenkenderException {
         LinkedList schenkender = new LinkedList();
         LinkedList beschenkter = new LinkedList();
 
         final List<Person> participants = getParticipants();
         for (int i = 0; i < participants.size(); ++i) {
+            LOGGER.info("For Schleife im Durchlauf {} fuer Participant {}", i, participants.get(i));
             schenkender.add(i, participants.get(i));
             beschenkter.add(i, participants.get(i));
         }
 
         HashMap hm = new HashMap();
 
-        while (!beschenkter.isEmpty() && !schenkender.isEmpty()) {
-            Object key = schenkender.get(getRandomIndex(schenkender));
-            Object value = beschenkter.get(getRandomIndex(beschenkter));
-            if (!key.equals(value) && !isForbidden(getForbiddenList(), key, value)) {
-                hm.put(key, value);
-                schenkender.remove(key);
-                beschenkter.remove(value);
+        final HashMap<String, String> forbiddenList = getForbiddenList();
+        for (int i = 0; i < 100; i++) {
+            if (!beschenkter.isEmpty() && !schenkender.isEmpty()) {
+                LOGGER.info("Beschenkter Array size {}", beschenkter.size());
+                LOGGER.info("Schenkender Array size {}", schenkender.size());
+                Object key = null;
+                Object value = null;
+                if(!schenkender.isEmpty()) {
+                    key = schenkender.get(getRandomIndex(schenkender));
+                }
+                if(!beschenkter.isEmpty()) {
+                    value = beschenkter.get(getRandomIndex(beschenkter));
+                }
+                if (!key.equals(value) && !isForbidden(forbiddenList, key, value)) {
+                    hm.put(key, value);
+                    schenkender.remove(key);
+                    beschenkter.remove(value);
+                }
             }
+        }
+        if (!schenkender.isEmpty()) {
+            LOGGER.info("Schenkender nicht empty, enthaehlt noch {} Elemente und als erstes Element {}", beschenkter.size(), beschenkter.getFirst().toString());
+        }
+        if (!beschenkter.isEmpty()) {
+            LOGGER.info("Schenkender nicht empty, enthaehlt noch {} Elemente und als erstes Element {}", schenkender.size(), schenkender.getFirst().toString());
+        }
+
+        if (!schenkender.isEmpty() || !beschenkter.isEmpty()) {
+            LOGGER.error("Schenkender oder Beschenkter nicht beruecksichtigt. Bitte nochmal generieren!!");
+            isSchenkenderOrBeschenkterNotEmpty(true);
+            throw new SchenkenderBeschenkenderException("Schenkender oder Beschenkter nicht beruecksichtigt. Bitte nochmal generieren!!");
         }
 
         return printMapAndSaveToPresentTable(hm);
+    }
+
+    private boolean isSchenkenderOrBeschenkterNotEmpty(boolean isError) {
+        return isError;
     }
 
     private static List<PresentTable> printMapAndSaveToPresentTable(Map mp) {
@@ -51,11 +85,12 @@ public class WeihnachtenverteilerService {
         return presentTableList;
     }
 
-    //TODO: ForbiddenListService has to be input by external interface
-    private static HashMap<String, String> getForbiddenList() {
+    public HashMap<String, String> getForbiddenList() {
+        List<ForbiddenList> allForbiddenPairs = forbiddenListService.getAllForbiddenPairs();
         HashMap simpleForbiddenList = new HashMap();
-        simpleForbiddenList.put("Egon", "Paul");
-        simpleForbiddenList.put("Hugo", "Hans");
+        for (ForbiddenList forbiddenList : allForbiddenPairs) {
+            simpleForbiddenList.put(forbiddenList.getFirstPersonName(), forbiddenList.getSecondPersonName());
+        }
         final HashMap reversedForbiddenList = reverse(simpleForbiddenList);
         HashMap mergedForbiddenMap = new HashMap();
         mergedForbiddenMap.putAll(simpleForbiddenList);
@@ -72,6 +107,7 @@ public class WeihnachtenverteilerService {
     }
 
     private static boolean isForbidden(HashMap<String, String> verboteneListe, Object key, Object value) {
+        LOGGER.info("Start des isForbbiden-Methode");
         Iterator var4 = verboteneListe.entrySet().iterator();
 
         Map.Entry entry;
@@ -87,8 +123,12 @@ public class WeihnachtenverteilerService {
     }
 
     private static int getRandomIndex(LinkedList<String> anyLinkedList) {
-        int sizeOfLinkedList = anyLinkedList.size();
-        Random generator = new Random();
-        return generator.nextInt(sizeOfLinkedList);
+        if (!anyLinkedList.isEmpty()) {
+            int sizeOfLinkedList = anyLinkedList.size();
+            Random generator = new Random();
+            return generator.nextInt(sizeOfLinkedList);
+        } else {
+            return 0;
+        }
     }
 }

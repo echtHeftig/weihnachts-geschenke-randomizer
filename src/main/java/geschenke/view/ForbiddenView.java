@@ -3,9 +3,9 @@ package geschenke.view;
 import com.vaadin.data.Binder;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.*;
+import geschenke.model.ForbiddenList;
+import geschenke.model.ForbiddenListService;
 import geschenke.model.Person;
 import geschenke.model.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +16,17 @@ import java.util.List;
 @SpringUI(path = "forbiddenview")
 public class ForbiddenView extends UI {
 
-    private Grid<Person> personGrid = new Grid<>(Person.class);
-    private ComboBox<String> personComboBox = new ComboBox<>();
-    private Binder<Person> personBinder = new Binder<>(Person.class);
+    private Grid<ForbiddenList> personGrid = new Grid<>(ForbiddenList.class);
+    private ComboBox<String> firstPersonComboBox = new ComboBox<>();
+    private ComboBox<String> secondPersonComboBox = new ComboBox<>();
+    private Button addForbiddenPersonPairButton = new Button("Hinzufügen zur ForbiddenPair List");
+    private Binder<Person> firstPersonBinder = new Binder<>(Person.class);
+    private Binder<Person> secondPersonBinder = new Binder<>(Person.class);
+    private ForbiddenList forbiddenList;
     @Autowired
     private PersonService personService;
+    @Autowired
+    private ForbiddenListService forbiddenListService;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -29,7 +35,24 @@ public class ForbiddenView extends UI {
         for (Person person : allPersons) {
             personNames.add(person.getName());
         }
-        personComboBox.setItems(personNames);
-        setContent(personComboBox);
+        firstPersonComboBox.setItems(personNames);
+        secondPersonComboBox.setItems(personNames);
+        firstPersonBinder.forField(firstPersonComboBox)
+                .bind(Person::getName, Person::setName);
+        secondPersonBinder.forField(secondPersonComboBox)
+                .bind(Person::getName, Person::setName);
+        addForbiddenPersonPairButton.addClickListener(e -> addPairToList(new Person(), new Person()));
+        VerticalLayout verticalLayout = new VerticalLayout();
+        HorizontalLayout horizontalLayout = new HorizontalLayout(firstPersonComboBox, secondPersonComboBox, addForbiddenPersonPairButton);
+        verticalLayout.addComponents(horizontalLayout, personGrid);
+        setContent(verticalLayout);
+    }
+
+    private void addPairToList(Person firstPerson1, Person secondPerson1) {
+        firstPersonBinder.writeBeanIfValid(firstPerson1);
+        secondPersonBinder.writeBeanIfValid(secondPerson1);
+        ForbiddenList forbiddenList = new ForbiddenList(firstPerson1.getName(), secondPerson1.getName());
+        forbiddenListService.saveForbiddenPair(forbiddenList);
+        personGrid.setItems(forbiddenListService.getAllForbiddenPairs());
     }
 }

@@ -16,6 +16,11 @@ public class ForbiddenList {
     public ForbiddenList() {
     }
 
+    public ForbiddenList(String firstPersonName, String secondPersonName) {
+        this.firstPersonName = firstPersonName;
+        this.secondPersonName = secondPersonName;
+    }
+
     public Long getId() {
         return id;
     }
