@@ -42,6 +42,7 @@ public class ForbiddenView extends UI {
         secondPersonBinder.forField(secondPersonComboBox)
                 .bind(Person::getName, Person::setName);
         addForbiddenPersonPairButton.addClickListener(e -> addPairToList(new Person(), new Person()));
+        personGrid.setItems(forbiddenListService.getAllForbiddenPairs());
         VerticalLayout verticalLayout = new VerticalLayout();
         HorizontalLayout horizontalLayout = new HorizontalLayout(firstPersonComboBox, secondPersonComboBox, addForbiddenPersonPairButton);
         verticalLayout.addComponents(horizontalLayout, personGrid);
