@@ -63,16 +63,12 @@ public class WeihnachtenverteilerService {
 
         if (!schenkender.isEmpty() || !beschenkter.isEmpty()) {
             LOGGER.error("Schenkender oder Beschenkter nicht beruecksichtigt. Bitte nochmal generieren!!");
-            isSchenkenderOrBeschenkterNotEmpty(true);
             throw new SchenkenderBeschenkenderException("Schenkender oder Beschenkter nicht beruecksichtigt. Bitte nochmal generieren!!");
         }
 
         return printMapAndSaveToPresentTable(hm);
     }
 
-    private boolean isSchenkenderOrBeschenkterNotEmpty(boolean isError) {
-        return isError;
-    }
 
     private static List<PresentTable> printMapAndSaveToPresentTable(Map mp) {
         Iterator it = mp.entrySet().iterator();
