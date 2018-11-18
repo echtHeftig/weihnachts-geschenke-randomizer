@@ -39,14 +39,15 @@ public class WeihnachtenverteilerService {
             if (!beschenkter.isEmpty() && !schenkender.isEmpty()) {
                 LOGGER.info("Beschenkter Array size {}", beschenkter.size());
                 LOGGER.info("Schenkender Array size {}", schenkender.size());
-                Object key = null;
-                Object value = null;
+                Person key = null;
+                Person value = null;
                 if(!schenkender.isEmpty()) {
-                    key = schenkender.get(getRandomIndex(schenkender));
+                    key = (Person) schenkender.get(getRandomIndex(schenkender));
                 }
                 if(!beschenkter.isEmpty()) {
-                    value = beschenkter.get(getRandomIndex(beschenkter));
+                    value = (Person) beschenkter.get(getRandomIndex(beschenkter));
                 }
+                LOGGER.info("Key is {} and value is {}", key.getName(), value.getName());
                 if (!key.equals(value) && !isForbidden(forbiddenList, key, value)) {
                     hm.put(key, value);
                     schenkender.remove(key);
@@ -113,7 +114,9 @@ public class WeihnachtenverteilerService {
             }
 
             entry = (Map.Entry) var4.next();
-        } while (entry.getKey() != key || entry.getValue() != value);
+            LOGGER.info("The current entry key is {} and the parameter key is {}", entry.getKey(), ((Person) key).getName());
+            LOGGER.info("The current entry value is {} and the parameter value is {}", entry.getValue(), ((Person) value).getName());
+        } while (entry.getKey() != ((Person) key).getName() || entry.getValue() != ((Person) value).getName());
 
         return true;
     }

@@ -43,7 +43,7 @@ public class GeneratePresentPairingView extends UI {
         try {
             presentTableList = weihnachtenverteilerService.getPresentTableList();
         } catch (SchenkenderBeschenkenderException e) {
-            Notification.show(e.getNewMessage());
+            Notification.show(e.getNewMessage(), Notification.Type.ERROR_MESSAGE);
             return;
         }
 
