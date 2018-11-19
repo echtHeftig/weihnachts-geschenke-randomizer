@@ -45,7 +45,7 @@ public class ForbiddenView extends UI {
         personGrid.setItems(forbiddenListService.getAllForbiddenPairs());
         VerticalLayout verticalLayout = new VerticalLayout();
         HorizontalLayout horizontalLayout = new HorizontalLayout(firstPersonComboBox, secondPersonComboBox, addForbiddenPersonPairButton);
-        verticalLayout.addComponents(horizontalLayout, personGrid);
+        verticalLayout.addComponents(new NavigationHorizontalLayout().getNavigationLayout(), horizontalLayout, personGrid);
         setContent(verticalLayout);
     }
 
