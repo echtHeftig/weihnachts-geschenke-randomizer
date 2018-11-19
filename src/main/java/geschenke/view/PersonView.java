@@ -27,6 +27,7 @@ public class PersonView extends UI {
                 .bind(Person::getName, Person::setName);
         button.addClickListener(e -> addPersonToGrid(new Person()));
         personGrid.setItems(personService.getAllPersons());
+        personGrid.setHeightByRows(12);
 
         final VerticalLayout verticalLayout = new VerticalLayout(new NavigationHorizontalLayout().getNavigationLayout(), textField, button, personGrid);
 

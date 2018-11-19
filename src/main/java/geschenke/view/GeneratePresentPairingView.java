@@ -32,6 +32,7 @@ public class GeneratePresentPairingView extends UI {
                 .setCaption("Beschenkte Person")
                 .setId("beschenktePersonId");
         grid.setColumns("schenkendePersonId", "beschenktePersonId");
+        grid.setHeightByRows(12);
         VerticalLayout verticalLayout = new VerticalLayout(new NavigationHorizontalLayout().getNavigationLayout(), grid, generateButton);
         generateButton.addClickListener(e -> updatePresentTable());
 
