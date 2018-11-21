@@ -22,6 +22,6 @@ public class NavigationHorizontalLayout extends HorizontalLayout {
     }
 
     private void switchToPage(String path) {
-        Page.getCurrent().open("http://localhost:8080/"+path, null);
+        Page.getCurrent().open(path, null);
     }
 }
