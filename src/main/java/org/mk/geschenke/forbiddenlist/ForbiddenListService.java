@@ -1,4 +1,6 @@
-package org.mk.geschenke.model;
+package org.mk.geschenke.forbiddenlist;
+
+import org.mk.geschenke.domain.ForbiddenList;
 
 import java.util.List;
 

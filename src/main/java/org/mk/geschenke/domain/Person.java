@@ -1,4 +1,4 @@
-package org.mk.geschenke.person;
+package org.mk.geschenke.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

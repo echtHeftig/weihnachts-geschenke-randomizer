@@ -3,7 +3,7 @@ package org.mk.geschenke.view;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
-import org.mk.geschenke.model.PresentTable;
+import org.mk.geschenke.domain.PresentTable;
 import org.mk.geschenke.model.SchenkenderBeschenkenderException;
 import org.mk.geschenke.model.WeihnachtenverteilerService;
 import org.slf4j.Logger;

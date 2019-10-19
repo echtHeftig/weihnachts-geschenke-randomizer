@@ -1,6 +1,9 @@
 package org.mk.geschenke.model;
 
-import org.mk.geschenke.person.Person;
+import org.mk.geschenke.domain.ForbiddenList;
+import org.mk.geschenke.domain.Person;
+import org.mk.geschenke.domain.PresentTable;
+import org.mk.geschenke.forbiddenlist.ForbiddenListService;
 import org.mk.geschenke.person.PersonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

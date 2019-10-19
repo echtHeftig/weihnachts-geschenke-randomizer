@@ -1,6 +1,4 @@
-package org.mk.geschenke.model;
-
-import org.mk.geschenke.person.Person;
+package org.mk.geschenke.domain;
 
 public class PresentTable {
     private Person schenkender;

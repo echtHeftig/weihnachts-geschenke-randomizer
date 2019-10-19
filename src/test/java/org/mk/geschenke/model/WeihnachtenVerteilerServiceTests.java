@@ -3,6 +3,8 @@ package org.mk.geschenke.model;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mk.geschenke.domain.ForbiddenList;
+import org.mk.geschenke.forbiddenlist.ForbiddenListService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

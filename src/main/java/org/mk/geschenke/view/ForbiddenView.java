@@ -4,9 +4,9 @@ import com.vaadin.data.Binder;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
-import org.mk.geschenke.model.ForbiddenList;
-import org.mk.geschenke.model.ForbiddenListService;
-import org.mk.geschenke.person.Person;
+import org.mk.geschenke.domain.ForbiddenList;
+import org.mk.geschenke.domain.Person;
+import org.mk.geschenke.forbiddenlist.ForbiddenListService;
 import org.mk.geschenke.person.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 

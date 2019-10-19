@@ -1,4 +1,4 @@
-package org.mk.geschenke.model;
+package org.mk.geschenke.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
