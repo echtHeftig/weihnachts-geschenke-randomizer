@@ -4,8 +4,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import org.mk.geschenke.domain.PresentTable;
-import org.mk.geschenke.model.SchenkenderBeschenkenderException;
-import org.mk.geschenke.model.WeihnachtenverteilerService;
+import org.mk.geschenke.presenttable.SchenkenderBeschenkenderException;
+import org.mk.geschenke.presenttable.PresentTableService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class GeneratePresentPairingView extends UI {
     private Button generateButton = new Button("Generate!");
 
     @Autowired
-    private WeihnachtenverteilerService weihnachtenverteilerService;
+    private PresentTableService presentTableService;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -42,7 +42,7 @@ public class GeneratePresentPairingView extends UI {
     private void updatePresentTable() {
         List<PresentTable> presentTableList = null;
         try {
-            presentTableList = weihnachtenverteilerService.getPresentTableList();
+            presentTableList = presentTableService.getPresentTableList();
         } catch (SchenkenderBeschenkenderException e) {
             Notification.show(e.getNewMessage(), Notification.Type.ERROR_MESSAGE);
             return;

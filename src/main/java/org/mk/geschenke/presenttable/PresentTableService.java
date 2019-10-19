@@ -1,4 +1,4 @@
-package org.mk.geschenke.model;
+package org.mk.geschenke.presenttable;
 
 import org.mk.geschenke.domain.ForbiddenList;
 import org.mk.geschenke.domain.Person;
@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
-public class WeihnachtenverteilerService {
+public class PresentTableService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WeihnachtenverteilerService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PresentTableService.class);
 
     @Autowired
     private PersonService personService;

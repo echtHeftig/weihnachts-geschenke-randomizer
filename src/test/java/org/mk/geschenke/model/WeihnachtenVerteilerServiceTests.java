@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mk.geschenke.domain.ForbiddenList;
 import org.mk.geschenke.forbiddenlist.ForbiddenListService;
+import org.mk.geschenke.presenttable.PresentTableService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -21,7 +22,7 @@ public class WeihnachtenVerteilerServiceTests {
     @Mock
     private ForbiddenListService forbiddenListServiceMock;
     @InjectMocks
-    private WeihnachtenverteilerService weihnachtenverteilerService;
+    private PresentTableService presentTableService;
 
     @Before
     public void setUp() {
@@ -37,7 +38,7 @@ public class WeihnachtenVerteilerServiceTests {
         when(forbiddenListServiceMock.getAllForbiddenPairs()).thenReturn(mockedSimpleForbiddenList);
 
         //When
-        final HashMap<String, String> forbiddenList = weihnachtenverteilerService.getForbiddenList();
+        final HashMap<String, String> forbiddenList = presentTableService.getForbiddenList();
 
         //Then
         verify(forbiddenListServiceMock, times(1)).getAllForbiddenPairs();
@@ -59,7 +60,7 @@ public class WeihnachtenVerteilerServiceTests {
         when(forbiddenListServiceMock.getAllForbiddenPairs()).thenReturn(mockedSimpleForbiddenList);
 
         //When
-        final HashMap<String, String> forbiddenList = weihnachtenverteilerService.getForbiddenList();
+        final HashMap<String, String> forbiddenList = presentTableService.getForbiddenList();
 
         //Then
         verify(forbiddenListServiceMock, times(1)).getAllForbiddenPairs();

@@ -1,4 +1,4 @@
-package org.mk.geschenke.model;
+package org.mk.geschenke.presenttable;
 
 public class SchenkenderBeschenkenderException extends Throwable {
     private String newMessage;
