@@ -1,7 +1,6 @@
 package org.mk.geschenke.forbiddenlist;
 
 import org.mk.geschenke.domain.ForbiddenList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
@@ -11,8 +10,11 @@ import java.util.List;
 @Service
 public class ForbiddenListServiceImpl implements ForbiddenListService {
 
-    @Autowired
-    ForbiddenListRepository forbiddenListRepository;
+    private ForbiddenListRepository forbiddenListRepository;
+
+    ForbiddenListServiceImpl(ForbiddenListRepository forbiddenListRepository) {
+        this.forbiddenListRepository = forbiddenListRepository;
+    }
 
     @Override
     public void saveForbiddenPair(ForbiddenList forbiddenList) {
