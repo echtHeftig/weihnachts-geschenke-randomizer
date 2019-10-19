@@ -9,8 +9,7 @@ public class Person {
     @Id
     private String name;
 
-    public Person() {
-    }
+    public Person() {}
 
     public Person(String name) {
         this.name = name;
