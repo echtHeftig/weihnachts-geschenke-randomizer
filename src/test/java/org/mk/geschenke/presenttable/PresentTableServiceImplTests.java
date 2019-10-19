@@ -1,14 +1,11 @@
-package org.mk.geschenke.model;
+package org.mk.geschenke.presenttable;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mk.geschenke.domain.ForbiddenList;
 import org.mk.geschenke.forbiddenlist.ForbiddenListService;
-import org.mk.geschenke.presenttable.PresentTableService;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mk.geschenke.person.PersonService;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -17,16 +14,18 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.*;
 
-public class WeihnachtenVerteilerServiceTests {
+public class PresentTableServiceImplTests {
 
-    @Mock
-    private ForbiddenListService forbiddenListServiceMock;
-    @InjectMocks
+    private PersonService personService;
+    private ForbiddenListService forbiddenListService;
+
     private PresentTableService presentTableService;
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        personService = mock(PersonService.class);
+        forbiddenListService = mock(ForbiddenListService.class);
+        presentTableService = new PresentTableServiceImpl(personService, forbiddenListService);
     }
 
     @Test
@@ -35,14 +34,14 @@ public class WeihnachtenVerteilerServiceTests {
         //Given
         final List<ForbiddenList> mockedSimpleForbiddenList = new LinkedList<>();
         mockedSimpleForbiddenList.add(new ForbiddenList("Lukas", "Samson"));
-        when(forbiddenListServiceMock.getAllForbiddenPairs()).thenReturn(mockedSimpleForbiddenList);
+        when(forbiddenListService.getAllForbiddenPairs()).thenReturn(mockedSimpleForbiddenList);
 
         //When
         final HashMap<String, String> forbiddenList = presentTableService.getForbiddenList();
 
         //Then
-        verify(forbiddenListServiceMock, times(1)).getAllForbiddenPairs();
-        verifyNoMoreInteractions(forbiddenListServiceMock);
+        verify(forbiddenListService, times(1)).getAllForbiddenPairs();
+        verifyNoMoreInteractions(forbiddenListService);
         final HashMap<String, String> expectedMergedForbiddenList = new HashMap<>();
         expectedMergedForbiddenList.put("Lukas", "Samson");
         expectedMergedForbiddenList.put("Samson", "Lukas");
@@ -57,14 +56,14 @@ public class WeihnachtenVerteilerServiceTests {
         mockedSimpleForbiddenList.add(new ForbiddenList("Thilo", "Herbert"));
         mockedSimpleForbiddenList.add(new ForbiddenList("Herbert", "Thilo"));
         mockedSimpleForbiddenList.add(new ForbiddenList("Samson", "Grobi"));
-        when(forbiddenListServiceMock.getAllForbiddenPairs()).thenReturn(mockedSimpleForbiddenList);
+        when(forbiddenListService.getAllForbiddenPairs()).thenReturn(mockedSimpleForbiddenList);
 
         //When
         final HashMap<String, String> forbiddenList = presentTableService.getForbiddenList();
 
         //Then
-        verify(forbiddenListServiceMock, times(1)).getAllForbiddenPairs();
-        verifyNoMoreInteractions(forbiddenListServiceMock);
+        verify(forbiddenListService, times(1)).getAllForbiddenPairs();
+        verifyNoMoreInteractions(forbiddenListService);
         final HashMap<String, String> expectedMergedForbiddenList = new HashMap<>();
         expectedMergedForbiddenList.put("Thilo", "Herbert");
         expectedMergedForbiddenList.put("Herbert", "Thilo");

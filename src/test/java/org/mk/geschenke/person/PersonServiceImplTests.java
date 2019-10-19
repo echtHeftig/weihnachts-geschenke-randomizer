@@ -14,9 +14,9 @@ import static org.mockito.Mockito.*;
 
 public class PersonServiceImplTests {
 
+    private PersonRepository personRepository;
 
     private PersonService personService;
-    private PersonRepository personRepository;
 
     @Before
     public void setup() {

@@ -15,6 +15,7 @@ import static org.mockito.Mockito.*;
 public class ForbiddenListServiceImplTests {
 
     private ForbiddenListRepository forbiddenListRepository;
+
     private ForbiddenListService forbiddenListService;
 
     @Before

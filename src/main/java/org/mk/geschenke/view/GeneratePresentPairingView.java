@@ -4,11 +4,10 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import org.mk.geschenke.domain.PresentTable;
-import org.mk.geschenke.presenttable.SchenkenderBeschenkenderException;
 import org.mk.geschenke.presenttable.PresentTableService;
+import org.mk.geschenke.presenttable.SchenkenderBeschenkenderException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -20,8 +19,11 @@ public class GeneratePresentPairingView extends UI {
     private Grid<PresentTable> grid = new Grid<>(PresentTable.class);
     private Button generateButton = new Button("Generate!");
 
-    @Autowired
     private PresentTableService presentTableService;
+
+    public GeneratePresentPairingView(PresentTableService presentTableService) {
+        this.presentTableService = presentTableService;
+    }
 
     @Override
     protected void init(VaadinRequest request) {
