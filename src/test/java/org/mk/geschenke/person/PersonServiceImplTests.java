@@ -31,6 +31,7 @@ public class PersonServiceImplTests {
         personService.addPerson(person);
 
         verify(personRepository, times(1)).save(person);
+        verifyNoMoreInteractions(personRepository);
     }
 
     @Test
@@ -41,6 +42,7 @@ public class PersonServiceImplTests {
         List<Person> allPersons = personService.getAllPersons();
 
         verify(personRepository, times(1)).findAll();
+        verifyNoMoreInteractions(personRepository);
         Assert.assertThat(allPersons.size(), CoreMatchers.is(0));
     }
 
@@ -53,6 +55,7 @@ public class PersonServiceImplTests {
         List<Person> allPersons = personService.getAllPersons();
 
         verify(personRepository, times(1)).findAll();
+        verifyNoMoreInteractions(personRepository);
         Assert.assertThat(allPersons.size(), CoreMatchers.is(1));
         Assert.assertEquals(expectedPerson, allPersons.get(0).getName());
     }
@@ -67,6 +70,7 @@ public class PersonServiceImplTests {
         List<Person> allPersons = personService.getAllPersons();
 
         verify(personRepository, times(1)).findAll();
+        verifyNoMoreInteractions(personRepository);
         Assert.assertThat(allPersons.size(), CoreMatchers.is(2));
         Assert.assertEquals(expectedPerson1, allPersons.get(0).getName());
         Assert.assertEquals(expectedPerson2, allPersons.get(1).getName());
