@@ -1,5 +1,7 @@
 package geschenke.model;
 
+import geschenke.person.Person;
+
 public class PresentTable {
     private Person schenkender;
     private Person beschenkter;

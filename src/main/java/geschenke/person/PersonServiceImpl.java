@@ -1,6 +1,5 @@
-package geschenke.model;
+package geschenke.person;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -9,8 +8,11 @@ import java.util.List;
 @Service
 public class PersonServiceImpl implements PersonService {
 
-    @Autowired
     private PersonRepository personRepository;
+
+    PersonServiceImpl(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     public void addPerson(Person person) {
         personRepository.save(person);

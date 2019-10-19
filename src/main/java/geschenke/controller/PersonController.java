@@ -1,7 +1,7 @@
 package geschenke.controller;
 
-import geschenke.model.Person;
-import geschenke.model.PersonServiceImpl;
+import geschenke.person.Person;
+import geschenke.person.PersonServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

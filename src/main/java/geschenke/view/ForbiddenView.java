@@ -6,8 +6,8 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import geschenke.model.ForbiddenList;
 import geschenke.model.ForbiddenListService;
-import geschenke.model.Person;
-import geschenke.model.PersonService;
+import geschenke.person.Person;
+import geschenke.person.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;

@@ -1,4 +1,4 @@
-package geschenke.model;
+package geschenke.person;
 
 import org.springframework.data.repository.CrudRepository;
 

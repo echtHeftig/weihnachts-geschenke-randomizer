@@ -1,4 +1,4 @@
-package geschenke.model;
+package geschenke.person;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
