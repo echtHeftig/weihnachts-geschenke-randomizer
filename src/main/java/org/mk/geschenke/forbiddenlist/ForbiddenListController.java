@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ForbiddenListController {
 
     @Autowired
-    ForbiddenListServiceImpl forbiddenListServiceImpl;
+    private ForbiddenListServiceImpl forbiddenListServiceImpl;
 
     @PostMapping
     public ResponseEntity<Void> addForbiddenEntry(@RequestBody ForbiddenList forbiddenList) {
