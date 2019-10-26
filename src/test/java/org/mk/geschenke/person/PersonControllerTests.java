@@ -1,6 +1,5 @@
 package org.mk.geschenke.person;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mk.geschenke.domain.Person;
@@ -11,10 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Collections;
-import java.util.List;
-
-import static org.mockito.BDDMockito.given;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,21 +27,15 @@ public class PersonControllerTests {
 
     @Test
     public void testAddPerson() throws Exception {
-        List<Person> allPersonsBefore = personService.getAllPersons();
-        Assert.assertTrue(allPersonsBefore.isEmpty());
 
         String personName = "Klaus";
-        given(personService.getAllPersons()).willReturn(Collections.singletonList(new Person(personName)));
 
         mockMvc.perform(post("/person")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{ \"name\":  \""+personName+"\" }"))
                 .andExpect(status().isCreated());
 
-        List<Person> allPersonsAfter = personService.getAllPersons();
-        Assert.assertFalse(allPersonsAfter.isEmpty());
-        Assert.assertEquals(1, allPersonsAfter.size());
-        Assert.assertEquals(personName, allPersonsAfter.get(0).getName());
+        verify(personService).addPerson(any(Person.class));
     }
 
 }
