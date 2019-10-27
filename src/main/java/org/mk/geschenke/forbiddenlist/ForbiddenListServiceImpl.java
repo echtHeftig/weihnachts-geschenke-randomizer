@@ -3,8 +3,6 @@ package org.mk.geschenke.forbiddenlist;
 import org.mk.geschenke.domain.ForbiddenList;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -23,12 +21,6 @@ public class ForbiddenListServiceImpl implements ForbiddenListService {
 
     @Override
     public List<ForbiddenList> getAllForbiddenPairs() {
-        Iterable<ForbiddenList> forbiddenListIterable = forbiddenListRepository.findAll();
-        Iterator<ForbiddenList> iterator = forbiddenListIterable.iterator();
-        LinkedList<ForbiddenList> forbiddenLists = new LinkedList<>();
-        while(iterator.hasNext()) {
-            forbiddenLists.add(iterator.next());
-        }
-        return forbiddenLists;
+        return forbiddenListRepository.findAll();
     }
 }
