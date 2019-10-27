@@ -118,4 +118,34 @@ public class ForbiddenListControllerIntegrationTests {
         Assert.assertEquals("A", allForbiddenPairsAfterTest.get(1).getFirstPersonName());
         Assert.assertEquals("B", allForbiddenPairsAfterTest.get(1).getSecondPersonName());
     }
+
+    @Test
+    public void testAddTwoViceVersaForbiddenEntriesWithoutGeneratedId() throws Exception {
+        List<ForbiddenList> allForbiddenPairsBeforeTest = forbiddenListService.getAllForbiddenPairs();
+        Assert.assertEquals(0, allForbiddenPairsBeforeTest.size());
+        List<ForbiddenList> expectedForbiddenList = Arrays.asList(
+                new ForbiddenList("A", "B"),
+                new ForbiddenList("B", "A")
+        );
+
+        for(ForbiddenList forbiddenList : expectedForbiddenList) {
+            mockMvc
+                    .perform(post("/forbidden")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("{" +
+                                    " \"firstPersonName\" : \"" + forbiddenList.getFirstPersonName() + "\", " +
+                                    " \"secondPersonName\" : \"" + forbiddenList.getSecondPersonName() + "\" " +
+                                    "}"
+                            )
+                    )
+                    .andExpect(status().isCreated());
+        }
+
+        List<ForbiddenList> allForbiddenPairsAfterTest = forbiddenListService.getAllForbiddenPairs();
+        Assert.assertEquals(2, allForbiddenPairsAfterTest.size());
+        Assert.assertEquals("A", allForbiddenPairsAfterTest.get(0).getFirstPersonName());
+        Assert.assertEquals("B", allForbiddenPairsAfterTest.get(0).getSecondPersonName());
+        Assert.assertEquals("B", allForbiddenPairsAfterTest.get(1).getFirstPersonName());
+        Assert.assertEquals("A", allForbiddenPairsAfterTest.get(1).getSecondPersonName());
+    }
 }
