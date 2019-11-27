@@ -2,6 +2,7 @@ package org.mk.geschenke.person;
 
 import org.mk.geschenke.domain.Person;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @Transactional
     public void deletePersonByName(String person) {
         personRepository.deleteByName(person);
     }
