@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,6 +38,15 @@ public class PersonControllerUnitTests {
                 .andExpect(status().isCreated());
 
         verify(personService).addPerson(any(Person.class));
+        verifyNoMoreInteractions(personService);
+    }
+
+    @Test
+    public void testDeletePerson() throws Exception {
+        mockMvc.perform(delete("/person/{personName}", "Eberhart"))
+                .andExpect(status().isNoContent());
+
+        verify(personService).deletePersonByName("Eberhart");
         verifyNoMoreInteractions(personService);
     }
 

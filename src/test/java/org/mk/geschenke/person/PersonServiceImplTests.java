@@ -75,4 +75,12 @@ public class PersonServiceImplTests {
         Assert.assertEquals(expectedPerson1, allPersons.get(0).getName());
         Assert.assertEquals(expectedPerson2, allPersons.get(1).getName());
     }
+
+    @Test
+    public void testDeletePerson() {
+        personService.deletePersonByName("Lukas");
+
+        verify(personRepository).deleteByName("Lukas");
+        verifyNoMoreInteractions(personRepository);
+    }
 }
